@@ -1,0 +1,101 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Bookings.SearchRoomModel
+
+@{
+    ViewData["Title"] = "SearchRoom";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Search Room</h1>
+
+<form asp-page="Room">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="BookingInputs.bedCount">How many beds?</label>
+        <select asp-for="BookingInputs.bedCount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+    </div>
+    <br/>
+
+    <div class="form-group">
+    <label asp-for="BookingInputs.CheckIn">Check in date:</label>
+    <input type="date" asp-for="BookingInputs.CheckIn"/>
+    </div>
+
+    <br/>
+
+    <div class="form-group">
+    <label asp-for="BookingInputs.CheckOut">Check out date:</label>
+    <input type="date" asp-for="BookingInputs.CheckOut"/>
+    </div>
+
+    <br />
+    
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+
+@if(ViewData["Error"] != null)
+{
+    <h4>
+        There is no available rooms for the selected dates.
+    </h4>
+}
+else if (Model.DiffRooms != null)
+{
+    @if (Model.DiffRooms.Count == 0)
+    {
+        <h4>
+            There is no available rooms for the selected dates.
+        </h4>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiffRooms[0].ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiffRooms[0].Level)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiffRooms[0].BedCount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DiffRooms[0].Price)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DiffRooms)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/Bookings/BookRoom"  asp-route-roomID="@item.ID" asp-route-CheckIn="@Model.BookingInputs.CheckIn.ToString("yyyy-MM-dd")" asp-route-CheckOut="@Model.BookingInputs.CheckOut.ToString("yyyy-MM-dd")">@Html.DisplayFor(modelItem => item.ID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Level)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BedCount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+}

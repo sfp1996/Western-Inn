@@ -1,0 +1,70 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Bookings.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Booking.BookingID" />
+            <div class="form-group">
+                <label asp-for="Booking.RoomID">Room ID:</label>
+                <select asp-for="Booking.RoomID" asp-items="ViewBag.ID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.GuestEmail" class="control-label"></label>
+                <select asp-for="Booking.GuestEmail" class ="form-control" asp-items="ViewBag.Email"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.CheckIn" class="control-label"></label>
+                <input asp-for="Booking.CheckIn" class="form-control" />
+                <span asp-validation-for="Booking.CheckIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.CheckOut" class="control-label"></label>
+                <input asp-for="Booking.CheckOut" class="form-control" />
+                <span asp-validation-for="Booking.CheckOut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.Cost" class="control-label"></label>
+                <input asp-for="Booking.Cost" class="form-control" />
+                <span asp-validation-for="Booking.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (Model.CheckRooms != null)
+{   
+    @if (Model.CheckRooms.Count == 0)
+    {
+        <h4>
+            The selected room is not available for the selected date.
+        </h4>
+    }
+}
+
+@if (ViewData["Error"] != null)
+{
+    <h4>
+        The selected room is not available for the selected date.
+    </h4>
+}
+
+<div>
+    <a asp-page="./ManageBooking">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

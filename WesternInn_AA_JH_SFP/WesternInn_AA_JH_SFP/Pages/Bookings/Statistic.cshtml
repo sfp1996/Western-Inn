@@ -1,0 +1,61 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Bookings.StatisticModel
+@{
+}
+<h2>Purchase statistics based on quantity bought</h2>
+<br />
+
+<div>
+    @* .table is a Bootstrap class giving table styles *@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(p => p.GuestPostcodeStats[0].Postcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.GuestPostcodeStats[0].GuestPostAmount)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.GuestPostcodeStats)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Postcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GuestPostAmount)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<br/>
+<h2>Booking distribution with respect to rooms</h2>
+<br />
+
+<div>
+    @* .table is a Bootstrap class giving table styles *@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(p => p.RoomBookStats[0].RoomID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.RoomBookStats[0].BookRoomNum)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.RoomBookStats)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookRoomNum)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

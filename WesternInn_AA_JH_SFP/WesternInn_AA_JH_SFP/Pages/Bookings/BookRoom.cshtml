@@ -1,0 +1,71 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Bookings.BookRoomModel
+
+@{
+    ViewData["Title"] = "BookRoom";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Book Room</h1>
+
+<h4>Booking</h4>
+<hr />
+<form asp-page="Room" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="BookingInputs.roomID">Room ID:</label>
+        <select asp-for="BookingInputs.roomID" asp-items="ViewBag.ID"></select>
+
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label asp-for="BookingInputs.CheckIn">Check in date:</label>
+        <input type="date" asp-for="BookingInputs.CheckIn"/>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label asp-for="BookingInputs.CheckOut">Check out date:</label>
+        <input type="date" asp-for="BookingInputs.CheckOut" />
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+@if (Model.CheckRooms != null)
+{
+    @if (Model.CheckRooms.Count == 0)
+    {
+        <h4>
+            The selected room is not available for the selected date.
+        </h4>
+    }
+    @if (ViewData["SuccessDB"] != null) {
+        <h4>
+            The selected room of @Model.BookingInputs.roomID on level @Model.CheckRooms.FirstOrDefault().Level with the check in date of
+            @Model.BookingInputs.CheckIn.ToShortDateString() and the check out date of @Model.BookingInputs.CheckOut.ToShortDateString() has been booked. 
+        </h4>
+        <br>
+        <h4>
+           The total cost for this booking is $@ViewData["TotalCost"].
+        </h4>
+    }
+    @if (ViewData["Error"] != null){
+    {
+        <h4>
+            The selected room is not available for the selected date.
+        </h4>
+    }
+}
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

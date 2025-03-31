@@ -1,0 +1,70 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Guests.MyDetailsModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "MyDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>MyDetails</h1>
+
+@if ((string)ViewData["ExistInDB"] == "true")
+{
+    <h4>Welcome, @UserManager.GetUserName(User)! You can edit your details below. </h4>
+}
+
+
+<h4>Guest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if ((string)ViewData["ExistInDB"] == "true")
+            {
+                <input type="hidden" asp-for="Person.Email" />
+            }
+            else
+            {
+                <input type="hidden" asp-for="Person.Email" value="sample@sample.com" />
+            }
+            <div class="form-group">
+                <label asp-for="Person.Surname" class="control-label"></label>
+                <input asp-for="Person.Surname" class="form-control" />
+                <span asp-validation-for="Person.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.GivenName" class="control-label"></label>
+                <input asp-for="Person.GivenName" class="form-control" />
+                <span asp-validation-for="Person.GivenName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.PostCode" class="control-label"></label>
+                <input asp-for="Person.PostCode" class="form-control" />
+                <span asp-validation-for="Person.PostCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (ViewData["SuccessDB"] != null)
+{
+    <!-- Success message when updating guest details -->
+    <p>
+        Your details have been updated with the following information:<br>
+        Full Name: <strong>@Model.Person.GivenName @Model.Person.Surname</strong><br>
+        Postcode: <strong>@Model.Person.PostCode</strong>.
+    </p>
+    
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

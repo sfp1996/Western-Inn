@@ -1,0 +1,68 @@
+﻿@page
+@model WesternInn_AA_JH_SFP.Pages.Bookings.MyBookingModel
+
+@{
+    ViewData["Title"] = "MyBooking";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>MyBooking</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].TheGuest.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].TheGuest.GivenName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].RoomID)
+            </th>
+            <th>
+                <a asp-page="MyBooking" asp-route-sortorder="@ViewData["NextCheckInBooking"]">
+                    @Html.DisplayNameFor(model => model.Booking[0].CheckIn)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Booking[0].CheckOut)
+            </th>
+            <th>
+                <a asp-page="MyBooking" asp-route-sortorder="@ViewData["NextCostBooking"]">
+                    @Html.DisplayNameFor(model => model.Booking[0].Cost)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Booking) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TheGuest.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TheGuest.GivenName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomID)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
